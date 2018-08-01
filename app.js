@@ -1,11 +1,17 @@
-//nods js inbuit core module http
-var http = require('http');
+var express  = require('express');
+var todoController = require('./controllers/todoController');
 
-var server = http.createServer(function(req, res){
-  console.log('request was made: ' + req.url);
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hey ninjas');
-});
+var app = express();
 
-server.listen(3000, '127.0.0.1');
-console.log('yo yo honey sing');
+//set up template engine
+app.set('view engine' , 'ejs');
+
+//static files
+app.use(express.static('./public'));
+
+//fire controllers
+todoController(app);
+
+//listen to a port
+app.listen(3000);
+console.log('You are listening to port 3000');
